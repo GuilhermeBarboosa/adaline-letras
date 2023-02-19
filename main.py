@@ -1,5 +1,4 @@
 
-
 w = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 x = [
@@ -28,9 +27,6 @@ x = [
 
 t = [1, -1, -1, -1, -1, 1, -1, 1, -1, -1, -1, 1, -1, -1, 1, -1, -1, 1, -1, -1, -1, 1, -1, 1, -1, -1, -1, -1, 1, 1, -1, -1, -1, -1, -1, 1, -1, 1, -1, -1, -1, -1, 1, -1, -1, 1, -1, -1, -1, 1, -1, -1, -1, 1, -1, -1, 1, -1, -1, -1, -1, 1, -1]
 
-
-vetor = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-
 testes = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 b = 0
@@ -39,7 +35,8 @@ y = 0
 
 max_int = 1000
 
-taxa_aprendizado = 0.0025
+# taxa_aprendizado = 0.0025
+taxa_aprendizado = 0.005
 
 soma = 0
 
@@ -95,9 +92,8 @@ for k in range(1, max_int):
         for j in range(0, len(x[i])):
 
             soma += x[i][j] * w[j]
-
             y_in = soma
-            testes[i] = soma;
+            testes[i] = soma
 
         if y_in >= 0:
             y = 1
@@ -128,38 +124,37 @@ for k in range(1, max_int):
 
         # print(t)
         # print("b" + str(b))
-        # print("y" + str(y))
+        # print("y" + str(y_in))
         # print("soma" + str(soma))
         # print("taxa_aprendizado" + str(taxa_aprendizado))
         # print("testes", str(testes))
+        # print("w" + str(w))
 
-        # vetorSaida = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-        # teste = x[4];
-        #
-        # # print(testes);
-        # for i in range(0, len(x)):
-        #     soma = 0
-        #     for j in range(0, len(x[i])):
-        #         soma = soma + teste[j]*w[i]
-        #         testes[i] = soma + w[i]
+        vetorSaida = [0, 0, 0, 0, 0, 0, 0]
+        inputTeclado = x[6]
+
+        # print(testes);
+        for i in range(0, len(x)):
+            soma = 0
+            for j in range(0, len(x[i])):
+                soma += inputTeclado[i] * w[j]
+                # y_in = soma
+                testes[i] = soma
 
 
-        # print(testes)
+        print(w)
+        print(testes)
 
-        # for j in range(0, len(x)):
-        #     if testes[j] >= y:
-        #         vetorSaida[j] = 1
-        #     else:
-        #         vetorSaida[j] = -1
+        for j in range(0, 7):
+            if testes[j] >= y_in:
+                vetorSaida[j] = 1
+            else:
+                vetorSaida[j] = -1
 
-        # print(vetorSaida)
+        print(vetorSaida)
 
-        # print(vetor)
 
         break
-
-
-
 
     print("")
 print("Finished")
