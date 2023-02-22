@@ -30,31 +30,29 @@ for j in range(numclasses):
 
 erro = 10
 ciclo = 0
+cicloDeterminado = 0
 
 yin = np.zeros((numclasses,1))
 y = np.zeros((numclasses,1))
 
 
-# opc = 0
 
-# print('DESEJA EXECUTAR O TREINAMENTO POR ERRO OU POR CICLOS:')
-# print('1 - ERROS')
-# print('2 - CICLOS')
-# opc = input('INSIRA O QUE DESEJA: ')
-# if opc==1:
-#     erro = (input('QUAL A QUANTIDADE DE ERRO: '))
-# elif opc == 2:
-#     ciclo = (input('QUAL A QUANTIDADE DE CICLO: '))
-#
-# print('ESCOLHA A TAXA DE APRENDIZAGEM: ')
-# alfa = input('INSIRA O QUE DESEJA: ')
+def insiraAlfa():
+    global alfa
+    print('\n ---- ESCOLHA A TAXA DE APRENDIZAGEM ----')
+    alfa = float(input('INSIRA O QUE DESEJA: '))
 
-while erro > errotolerado:
+def treinarRNA():
+
+    global erro, ciclo, i, soma, j
+    print('TREINANDO... \n')
+    print('CICLOS: ' + str(ciclo) + " ERRO: " + str(erro))
+
     erro = 0
     ciclo = ciclo + 1
 
     for i in range(amostras):
-        xaux = x[i,:]
+        xaux = x[i, :]
         for m in range(numclasses):
             soma = 0
             for n in range(entradas):
@@ -68,37 +66,55 @@ while erro > errotolerado:
                 y[j] = -1.0
 
         for j in range(numclasses):
-            erro = erro + 0.5 * ((t[j][i] - y[j])**2)
+            erro = erro + 0.5 * ((t[j][i] - y[j]) ** 2)
         vanterior = v
 
         for m in range(entradas):
             for n in range(numclasses):
-                v[m][n] = vanterior[m][n] + alfa*(t[n][i] - y[n]) * xaux[m]
+                v[m][n] = vanterior[m][n] + alfa * (t[n][i] - y[n]) * xaux[m]
         v0anterior = v0
-
 
         for j in range(numclasses):
             v0[j] = v0anterior[j] + alfa * (t[j][i] - y[j])
-
     vetorCiclos.append(ciclo)
     vetorErros.append(erro)
-
-    plt.scatter(vetorCiclos, vetorErros, marker='x', color='blue')
+    plt.scatter(vetorCiclos, vetorErros, marker='x', color='red')
     plt.xlabel('Ciclo')
     plt.ylabel('Erro')
     plt.show()
 
-# print(vetorCiclos)
-# print(erro)
+opc = 0
 
-#opc = input('DESEJA TESTAR COM QUAL LETRA?')
-# while opc < 1 or opc > 21:
-#     opc = input('OPÇÃO INVALIDA\n\n')
-#     opc = input('DESEJA TESTAR COM QUAL LETRA?')
-#
-# xteste = x[opc,:]
+print('DESEJA EXECUTAR O TREINAMENTO POR ERRO OU POR CICLOS:')
+print('1 - ERROS')
+print('2 - CICLOS')
+opc = int(input('INSIRA O QUE DESEJA: '))
+print(opc)
 
-xteste = x[7,:]
+if opc == 1:
+    errotolerado = float(input('QUAL O ERRO TOLERADO: '))
+    insiraAlfa()
+
+    while erro > errotolerado:
+        treinarRNA()
+
+elif opc == 2:
+    cicloDeterminado = int(input('QUAL A QUANTIDADE DE CICLO: '))
+    insiraAlfa()
+
+    while ciclo < cicloDeterminado:
+        treinarRNA()
+
+def inserirTesteRNA():
+    global opc, xteste
+    opc = int(input('DESEJA TESTAR COM QUAL LETRA?'))
+    while opc < 1 or opc > 21:
+        print('OPÇÃO INVALIDA\n\n')
+        opc = int(input('DESEJA TESTAR COM QUAL LETRA?'))
+    xteste = x[opc, :]
+
+inserirTesteRNA()
+
 for m2 in range(numclasses):
     soma = 0
     for n2 in range(entradas):
