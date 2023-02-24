@@ -5,18 +5,26 @@ import matplotlib.pyplot as plt
 
 os.chdir(r'C:\Users\Guilherme\Documents\Projetos\projeto-adaline')
 x = np.loadtxt('x.txt')
+
 (amostras, entradas) = np.shape(x)
 
 t = np.genfromtxt('target.txt')
 (numclasses, targets) = np.shape(t)
+#
+# print(numclasses)
+# print(targets)
 
 limiar = 0.0
 alfa = 0.01
 errotolerado = 0.001
 
-v = np.empty((entradas, numclasses))
+v = np.zeros((entradas, numclasses))
 
-v0 = np.empty(numclasses)
+
+
+v0 = np.zeros(numclasses)
+
+# print(v0)
 
 vetorCiclos = []
 vetorErros = []
@@ -35,7 +43,7 @@ cicloDeterminado = 0
 yin = np.zeros((numclasses,1))
 y = np.zeros((numclasses,1))
 
-
+# print(y)
 
 def insiraAlfa():
     global alfa
@@ -53,6 +61,8 @@ def treinarRNA():
 
     for i in range(amostras):
         xaux = x[i, :]
+
+        # print(xaux)
         for m in range(numclasses):
             soma = 0
             for n in range(entradas):
@@ -71,6 +81,7 @@ def treinarRNA():
 
         for m in range(entradas):
             for n in range(numclasses):
+                print(y[n])
                 v[m][n] = vanterior[m][n] + alfa * (t[n][i] - y[n]) * xaux[m]
         v0anterior = v0
 
